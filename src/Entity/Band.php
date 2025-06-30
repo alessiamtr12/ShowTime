@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\MusicGenre;
 use App\Repository\BandRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,8 +17,8 @@ class Band
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $genre = null;
+    #[ORM\Column(enumType: MusicGenre::class)]
+    private ?MusicGenre $genre = null;
 
     public function getId(): ?int
     {
@@ -36,12 +37,12 @@ class Band
         return $this;
     }
 
-    public function getGenre(): ?string
+    public function getGenre(): ?MusicGenre
     {
         return $this->genre;
     }
 
-    public function setGenre(string $genre): static
+    public function setGenre(MusicGenre $genre): static
     {
         $this->genre = $genre;
 
