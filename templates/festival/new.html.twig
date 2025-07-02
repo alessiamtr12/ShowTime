@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Festival{% endblock %}
+
+{% block body %}
+    <h1>Create new festival</h1>
+
+    {{ include('festival/form.html.twig') }}
+
+    <button class="btn btn-soft btn-primary">
+        <a href="{{ path('app_festival_index') }}">Back to list</a>
+    </button>
+
+{% endblock %}

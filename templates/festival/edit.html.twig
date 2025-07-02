@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Band{% endblock %}
+
+{% block body %}
+    <h1>Edit Festival</h1>
+
+
+    {{ include('festival/form.html.twig', {'button_label': 'Update'}) }}
+    <div class="flex flex-row p-4">
+        {{ include('festival/delete_form.html.twig') }}
+        <button class="btn btn-soft btn-primary">
+            <a href="{{ path('app_festival_index') }}">Back to list</a>
+        </button>
+
+
+    </div>
+{% endblock %}
