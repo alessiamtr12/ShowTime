@@ -1,4 +1,61 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-<button class="btn btn-soft btn-primary">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="bg-base-200 text-base-content p-6 rounded-box">
+    <h2 class="text-xl font-bold mb-6">{{ form_title|default('Form') }}</h2>
+    {{ form_start(form) }}
+    <div class="form-control w-full mb-4">
+        {{ form_label(form.name, null,{
+            'label_attr':{'class' : 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.name, {'attr' : {'class': 'input input-bordered bg-base-100 text-base-content'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.price, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.price, {'attr': {'class': 'input input-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.price) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.location, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.location, {'attr': {'class': 'input input-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.location) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.startDate, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.startDate, {
+            'attr': {'class': 'select select-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.startDate) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.endDate, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.endDate, {
+            'attr': {'class': 'select select-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.endDate) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.bands, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.bands, {
+            'attr': {'class': 'select select-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.bands) }}
+    </div>
+
+    <button class="btn btn-primary">
+        {{ button_label|default('Update') }}
+    </button>
+    {{ form_end(form) }}
+
+
+</div>

@@ -1,4 +1,26 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-<button class="btn btn-soft btn-primary">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="bg-base-200 text-base-content p-6 rounded-box">
+    <h2 class="text-xl font-bold mb-6">{{ form_title|default('Form') }}</h2>
+    {{ form_start(form) }}
+    <div class="form-control w-full mb-4">
+        {{ form_label(form.name, null,{
+            'label_attr':{'class' : 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.name, {'attr' : {'class': 'input input-bordered bg-base-100 text-base-content'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.genre, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.genre, {
+            'attr': {'class': 'select select-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.genre) }}
+    </div>
+    <button class="btn btn-primary">
+        {{ button_label|default('Update') }}
+    </button>
+    {{ form_end(form) }}
+
+
+</div>

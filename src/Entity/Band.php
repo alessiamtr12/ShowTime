@@ -15,9 +15,11 @@ class Band
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Band name cannot be blank')]
     private ?string $name = null;
 
     #[ORM\Column(enumType: MusicGenre::class)]
+    #[Assert\NotBlank(message: 'Genre cannot be blank')]
     private ?MusicGenre $genre = null;
 
     public function getId(): ?int

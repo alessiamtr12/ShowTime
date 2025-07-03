@@ -3,16 +3,21 @@
 {% block title %}Edit Band{% endblock %}
 
 {% block body %}
-    <h1>Edit Band</h1>
+
+    <div class="flex flex-col items-center">
+
+        <div class="w-full flex justify-center">
 
 
-    {{ include('band/_form.html.twig', {'button_label': 'Update'}) }}
-    <div class="flex flex-row p-4">
-        {{ include('band/_delete_form.html.twig') }}
-        <button class="btn btn-soft btn-primary">
-            <a href="{{ path('app_band_index') }}">Back to list</a>
-        </button>
+            {{ include('band/_form.html.twig', {'button_label': 'Update', 'form_title': 'Edit Band'}) }}
+        </div>
+        <div class="flex flex-row p-4 justify-center">
+            {{ include('band/_delete_form.html.twig') }}
+            <button class="btn btn-soft btn-primary">
+                <a href="{{ path('app_band_index') }}">Back to list</a>
+            </button>
 
-
+        </div>
     </div>
+
 {% endblock %}

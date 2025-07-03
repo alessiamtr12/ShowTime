@@ -17,18 +17,27 @@ class Festival
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Name cannot be blank')]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Price cannot be blank')]
+    #[Assert\Type(type: 'numeric', message: 'Price must be a number')]
+    #[Assert\PositiveOrZero(message: 'Price cannot be negative')]
     private ?float $price = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Location cannot be blank')]
     private ?string $location = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull(message: 'Start date is required')]
+    #[Assert\Date(message: 'Start date must be a valid date')]
     private ?\DateTime $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull(message: 'End date is required')]
+    #[Assert\Date(message: 'End date must be a valid date')]
     private ?\DateTime $endDate = null;
 
     /**

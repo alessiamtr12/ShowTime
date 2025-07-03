@@ -21,7 +21,7 @@ class FestivalType extends AbstractType
             ->add('endDate')
             ->add('bands', EntityType::class, [
                 'class' => Band::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
             ]);
     }

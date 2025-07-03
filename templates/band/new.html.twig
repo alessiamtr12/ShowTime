@@ -3,12 +3,18 @@
 {% block title %}New Band{% endblock %}
 
 {% block body %}
-    <h1>Create new band</h1>
+    <div class="flex flex-col items-center">
 
-    {{ include('band/_form.html.twig') }}
+        <div class="flex justify-center">
 
-    <button class="btn btn-soft btn-primary">
-        <a href="{{ path('app_band_index') }}">Back to list</a>
-    </button>
+
+            {{ include('band/_form.html.twig', {'form_title': 'Create new band'}) }}
+        </div>
+        <div class="flex flex-row p-4 justify-center">
+            <button class="btn btn-soft btn-primary">
+                <a href="{{ path('app_band_index') }}">Back to list</a>
+            </button>
+        </div>
+    </div>
 
 {% endblock %}
