@@ -17,6 +17,15 @@
         }) }}
         {{ form_errors(form.genre) }}
     </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.image, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.image, {
+            'attr': {'class': 'select select-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.image) }}
+    </div>
     <button class="btn btn-primary">
         {{ button_label|default('Update') }}
     </button>

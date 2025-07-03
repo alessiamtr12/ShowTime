@@ -30,6 +30,17 @@ final class BandController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+            }
+
+            $imageFile->move(
+                $this->getParameter('assets_images_directory'),
+                $newFilename
+            );
+            $band->setImagePath($newFilename);
+
             $entityManager->persist($band);
             $entityManager->flush();
 
@@ -57,6 +68,18 @@ final class BandController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                $imageFile->move(
+                    $this->getParameter('assets_images_directory'),
+                    $newFilename
+                );
+                $band->setImagePath($newFilename);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_band_index', [], Response::HTTP_SEE_OTHER);

@@ -22,6 +22,9 @@ class Band
     #[Assert\NotBlank(message: 'Genre cannot be blank')]
     private ?MusicGenre $genre = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagePath = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,6 +50,18 @@ class Band
     public function setGenre(MusicGenre $genre): static
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->imagePath;
+    }
+
+    public function setImagePath(?string $imagePath): static
+    {
+        $this->imagePath = $imagePath;
 
         return $this;
     }
