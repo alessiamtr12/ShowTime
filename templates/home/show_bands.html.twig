@@ -1,0 +1,28 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}Bands{% endblock %}
+
+{% block body %}
+
+    <div class="w-full px-4">
+        <div class="grid grid-cols-1 gap-8 justify-items-center mt-10">
+            {% for band in festival.bands %}
+                <div class="card w-80 bg-base-100 shadow-md">
+                    <figure class="h-64 overflow-hidden">
+                        <img
+                            src="{{ asset('assets/images/' ~ band.imagePath) }}"
+                            alt="{{ band.name }}"
+                            class="object-cover w-full h-full"/>
+                    </figure>
+                    <div class="card-body text-center">
+                        <h2 class="card-title justify-center">{{ band.name }}</h2>
+                    </div>
+                </div>
+            {% else %}
+                <p class="col-span-full text-center text-gray-500">No bands found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

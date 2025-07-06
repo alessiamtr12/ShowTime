@@ -1,0 +1,16 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}New Booking{% endblock %}
+
+{% block body %}
+
+    <div class="flex flex-col items-center">
+
+        <div class="flex justify-center">
+            {{ include('booking/form.html.twig', {'form_title' : 'Create new  booking'}) }}
+
+        </div>
+        
+    </div>
+
+{% endblock %}

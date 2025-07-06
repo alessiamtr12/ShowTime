@@ -3,49 +3,52 @@
 {% block title %}Hello FestivalController!{% endblock %}
 
 {% block body %}
+    <div>
+        {{ include('festival/filter_form.html.twig') }}
 
-    <h1>Festivals</h1>
+        <h1>Festivals</h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Location</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for festival in festivals %}
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ festival.id }}</td>
-                <td>{{ festival.name }}</td>
-                <td>{{ festival.price }}</td>
-                <td>{{ festival.location }}</td>
-                <td>{{ festival.startDate|date('Y-m-d') }}</td>
-                <td>{{ festival.endDate|date('Y-m-d') }}</td>
-                <td>
-                    <button class="btn btn-soft btn-primary">
-                        <a href="{{ path('app_festival_show', {'id': festival.id}) }}">Show</a>
-                    </button>
-                    <button class="btn btn-soft btn-primary">
-                        <a href="{{ path('app_festival_edit', {'id': festival.id}) }}">Edit</a>
-                    </button>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for festival in festivals %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ festival.id }}</td>
+                    <td>{{ festival.name }}</td>
+                    <td>{{ festival.price }}</td>
+                    <td>{{ festival.location }}</td>
+                    <td>{{ festival.startDate|date('Y-m-d') }}</td>
+                    <td>{{ festival.endDate|date('Y-m-d') }}</td>
+                    <td>
+                        <button class="btn btn-soft btn-primary">
+                            <a href="{{ path('app_festival_show', {'id': festival.id}) }}">Show</a>
+                        </button>
+                        <button class="btn btn-soft btn-primary">
+                            <a href="{{ path('app_festival_edit', {'id': festival.id}) }}">Edit</a>
+                        </button>
 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <button class="btn btn-soft btn-primary">
-        <a href="{{ path('app_festival_new') }}">Create new</a>
-    </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <button class="btn btn-soft btn-primary">
+            <a href="{{ path('app_festival_new') }}">Create new</a>
+        </button>
+    </div>
 
 {% endblock %}

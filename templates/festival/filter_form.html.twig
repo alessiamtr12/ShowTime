@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+
+<div class="form-control">
+    {{ form_label(form.location) }}
+    {{ form_widget(form.location, {'attr': {'class': 'input'}}) }}
+    {{ form_errors(form.location) }}
+</div>
+
+<button class="btn btn-primary">Filter</button>
+
+{{ form_end(form) }}

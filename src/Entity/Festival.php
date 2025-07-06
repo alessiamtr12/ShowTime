@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FestivalRepository::class)]
 class Festival
@@ -32,12 +33,10 @@ class Festival
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotNull(message: 'Start date is required')]
-    #[Assert\Date(message: 'Start date must be a valid date')]
     private ?\DateTime $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotNull(message: 'End date is required')]
-    #[Assert\Date(message: 'End date must be a valid date')]
     private ?\DateTime $endDate = null;
 
     /**
@@ -46,9 +45,19 @@ class Festival
     #[ORM\ManyToMany(targetEntity: Band::class)]
     private Collection $bands;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    /**
+     * @var Collection<int, Booking>
+     */
+    #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'bookedFestival')]
+    private Collection $bookings;
+
     public function __construct()
     {
         $this->bands = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,6 +145,47 @@ class Festival
     public function removeBand(Band $band): static
     {
         $this->bands->removeElement($band);
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): static
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings->add($booking);
+            $booking->setBookedFestival($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): static
+    {
+        if ($this->bookings->removeElement($booking)) {
+            if ($booking->getBookedFestival() === $this) {
+                $booking->setBookedFestival(null);
+            }
+        }
 
         return $this;
     }

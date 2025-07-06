@@ -1,0 +1,35 @@
+{% extends 'base_public.html.twig' %}
+
+{% block title %}Festival{% endblock %}
+
+{% block body %}
+    <h1>Festival</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ festival.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ festival.name }}</td>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <td>{{ festival.price }}</td>
+        </tr>
+        <tr>
+            <th>Bands</th>
+            <td>
+                <button class="btn btn-soft btn-primary">
+                    <a href="{{ path('app_festival_bands', {'id': festival.id}) }}">Show Bands</a>
+                </button>
+            </td>
+        </tr>
+
+
+        </tbody>
+    </table>
+    
+{% endblock %}

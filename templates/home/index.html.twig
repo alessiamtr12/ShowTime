@@ -1,0 +1,61 @@
+{% extends 'base_public.html.twig' %}
+
+
+{% block title %}Festival{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Festivals</h1>
+
+        <div class="space-y-6">
+            {% for festival in festivals %}
+                <div class="flex flex-col md:flex-row items-start gap-4 bg-base-100 p-4 rounded-lg shadow-md">
+                    <img
+                        src="{{ asset('assets/images/' ~ festival.image) }}"
+                        alt="{{ festival.name }}"
+                        class="rounded-lg object-cover w-96 h-48"/>
+                    <div class="flex justify-left">
+                        <div class="group relative w-12 h-14 overflow-visible mb-2">
+                            <div class="flex flex-col items-center justify-center w-12 h-14 bg-base-300 rounded">
+                                <span class="text-lg font-bold text-gray-800">{{ festival.startDate|date('d') }}</span>
+                                <span class="text-xs text-gray-500">{{ festival.startDate|date('M') }}</span>
+                            </div>
+                            <div
+                                class="absolute top-0 left-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div
+                                    class="flex flex-col items-center justify-center w-12 h-14 bg-base-300 rounded shadow-md">
+                                    <span
+                                        class="text-lg font-bold text-gray-800">{{ festival.endDate|date('d') }}</span>
+                                    <span class="text-xs text-gray-500">{{ festival.endDate|date('M') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 flex flex-col items-center text-center">
+                        <h2 class="text-2xl font-bold mb-2">{{ festival.name }}</h2>
+                        <div class="flex items-center text-sm text-gray-600 mb-2 space-x-2">
+                            <span style="font-size:24px;">&#x1f4cd;</span>
+
+                            <span>{{ festival.location }}</span>
+                        </div>
+                        <a href="{{ path('app_home_festival_bands', {'id': festival.id}) }}"
+                           class="btn btn-outline btn-primary mt-2">Show Bands</a>
+                    </div>
+                    <div class="flex flex-col items-end justify-between h-full ml-auto">
+                        <a href="{{ path('app_booking_new',  {'id': festival.id}) }}" class="btn btn-primary">Book
+                            Now</a>
+                        <div class="text-lg font-semibold text-right text-gray-700 mt-2">{{ festival.price }} RON
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+

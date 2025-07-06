@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Enum\MusicGenre;
 use App\Repository\BandRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BandRepository::class)]
 class Band

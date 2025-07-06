@@ -1,0 +1,27 @@
+<div class="bg-base-200 text-base-content p-6 rounded-box">
+    <h2 class="text-xl font-bold mb-6">{{ form_title|default('Form') }}</h2>
+    {{ form_start(form) }}
+    <div class="form-control w-full mb-4">
+        {{ form_label(form.name, null,{
+            'label_attr':{'class' : 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.name, {'attr' : {'class': 'input input-bordered bg-base-100 text-base-content'}}) }}
+        {{ form_errors(form.name) }}
+    </div>
+    <div class="form-control w-full mb-6">
+        {{ form_label(form.email, null, {
+            'label_attr': {'class': 'label text-base-content font-medium'}
+        }) }}
+        {{ form_widget(form.email, {
+            'attr': {'class': 'input input-bordered bg-base-100 text-base-content'}
+        }) }}
+        {{ form_errors(form.email) }}
+    </div>
+
+    <button class="btn btn-primary">
+        {{ button_label|default('Update') }}
+    </button>
+    {{ form_end(form) }}
+
+
+</div>
