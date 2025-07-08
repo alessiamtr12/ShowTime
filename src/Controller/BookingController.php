@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Festival;
 use App\Form\BookingType;
 use App\Repository\BookingRepository;
-use App\Repository\FestivalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +25,9 @@ final class BookingController extends AbstractController
     }
 
     #[Route('/{id}/new', name: 'app_booking_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, FestivalRepository $festivalRepository, int $id): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Festival $festival): Response
     {
-        $bookedFestival = $festivalRepository->find($id);
+        $bookedFestival = $festival;
         $booking = new Booking();
         $booking->setBookedFestival($bookedFestival);
         $form = $this->createForm(BookingType::class, $booking);

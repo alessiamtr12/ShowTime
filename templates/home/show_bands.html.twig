@@ -2,27 +2,51 @@
 
 {% block title %}Bands{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('flipster/jquery.flipster.min.css') }}">
+{% endblock %}
 
-    <div class="w-full px-4">
-        <div class="grid grid-cols-1 gap-8 justify-items-center mt-10">
-            {% for band in festival.bands %}
-                <div class="card w-80 bg-base-100 shadow-md">
-                    <figure class="h-64 overflow-hidden">
-                        <img
-                            src="{{ asset('assets/images/' ~ band.imagePath) }}"
-                            alt="{{ band.name }}"
-                            class="object-cover w-full h-full"/>
-                    </figure>
-                    <div class="card-body text-center">
-                        <h2 class="card-title justify-center">{{ band.name }}</h2>
-                    </div>
-                </div>
-            {% else %}
-                <p class="col-span-full text-center text-gray-500">No bands found.</p>
-            {% endfor %}
+
+{% block body %}
+    <div class="flex flex-col items-center">
+        <div id="carousel" class="space-y-8 p-8">
+            <ul>
+                {% for band in festival.bands %}
+                    <li>
+                        <div class="text-center w-96 bg-base-200 p-4 rounded-lg shadow">
+                            <img src="{{ asset('assets/images/' ~ band.imagePath) }}"
+                                 class="w-full h-48 object-cover rounded mb-2"/>
+                            <h2 class="text-lg font-bold">{{ band.name }}</h2>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
+        <a href="{{ path('app_home') }}" class="btn btn-soft">Back to festivals</a>
+
     </div>
 
 
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="{{ asset('flipster/jquery.flipster.min.js') }}"></script>
+    <script>
+        function initFlipster() {
+            const $carousel = $("#carousel");
+            if ($carousel.hasClass('flipster-initialized')) {
+                return;
+            }
+            $carousel.flipster({
+                style: 'carousel',
+                spacing: -0.5,
+                buttons: true,
+            });
+            $carousel.addClass('flipster-initialized');
+        }
+
+        $(document).ready(initFlipster);
+    </script>
+{% endblock %}
+
