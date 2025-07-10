@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Bands</h1>
 
-    <table class="table">
+    <table class="sortable table">
         <thead>
         <tr>
             <th>Id</th>
@@ -40,5 +40,5 @@
     <button class="btn btn-soft btn-primary">
         <a href="{{ path('app_band_new') }}">Create new</a>
     </button>
-
+    <script src="{{ asset('sort/sorttable.js') }}"></script>
 {% endblock %}

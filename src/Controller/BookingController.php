@@ -23,7 +23,7 @@ final class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/new', name: 'app_booking_new', methods: ['GET', 'POST'])]
+    #[Route('/profile/{id}/new', name: 'app_booking_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, Festival $festival): Response
     {
         $bookedFestival = $festival;
