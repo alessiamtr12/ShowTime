@@ -17,10 +17,13 @@
         }) }}
         {{ form_errors(form.email) }}
     </div>
+    <div class="flex justify-center items-center">
 
-    <button class="btn btn-primary">
-        {{ button_label|default('Update') }}
-    </button>
+
+        <button class="btn btn-primary">
+            {{ button_label|default('Update') }}
+        </button>
+    </div>
     {{ form_end(form) }}
 
 

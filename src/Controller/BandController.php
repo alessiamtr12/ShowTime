@@ -15,10 +15,29 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BandController extends AbstractController
 {
     #[Route(name: 'app_band_index', methods: ['GET'])]
-    public function index(BandRepository $bandRepository): Response
+    public function index(Request $request, BandRepository $bandRepository): Response
     {
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+
+        $queryBuilder = $bandRepository->createQueryBuilder('b')
+            ->orderBy('b.id', 'DESC');
+
+        $total = count($queryBuilder->getQuery()->getResult());
+
+        $bands = $queryBuilder
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+
+        $totalPages = ceil($total / $limit);
+
         return $this->render('band/index.html.twig', [
-            'bands' => $bandRepository->findAll(),
+            'bands' => $bands,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 

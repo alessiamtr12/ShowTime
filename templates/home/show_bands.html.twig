@@ -2,51 +2,29 @@
 
 {% block title %}Bands{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('flipster/jquery.flipster.min.css') }}">
-{% endblock %}
-
-
 {% block body %}
-    <div class="flex flex-col items-center">
-        <div id="carousel" class="space-y-8 p-8">
-            <ul>
-                {% for band in festival.bands %}
-                    <li>
-                        <div class="text-center w-96 bg-base-200 p-4 rounded-lg shadow">
-                            <img src="{{ asset('assets/images/' ~ band.imagePath) }}"
-                                 class="w-full h-48 object-cover rounded mb-2"/>
-                            <h2 class="text-lg font-bold">{{ band.name }}</h2>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Bands at {{ festival.name }}</h1>
+
+        <div class="grid grid-cols-1 grid-cols-3 gap-6">
+            {% for band in festival.bands %}
+                <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{{ asset('assets/images/' ~ band.imagePath) }}"
+                         alt="{{ band.name }}"
+                         class="w-full h-80 object-cover transform group-hover:scale-110 transition duration-500 ease-in-out"/>
+
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <h4 class="text-white text-xl font-semibold">{{ band.name }}</h4>
+                    </div>
+                </div>
+            {% else %}
+                <p class="col-span-full text-center text-gray-500">No bands available for this festival.</p>
+            {% endfor %}
         </div>
-        <a href="{{ path('app_home') }}" class="btn btn-soft">Back to festivals</a>
 
+        <div class="mt-8 text-center">
+            <a href="{{ path('app_home') }}" class="btn btn-soft">Back to festivals</a>
+        </div>
     </div>
-
-
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    <script src="{{ asset('flipster/jquery.flipster.min.js') }}"></script>
-    <script>
-        function initFlipster() {
-            const $carousel = $("#carousel");
-            if ($carousel.hasClass('flipster-initialized')) {
-                return;
-            }
-            $carousel.flipster({
-                style: 'carousel',
-                spacing: -0.5,
-                buttons: true,
-            });
-            $carousel.addClass('flipster-initialized');
-        }
-
-        $(document).ready(initFlipster);
-    </script>
-{% endblock %}
-

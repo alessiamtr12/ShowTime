@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme="abyss">
+<html data-theme="{{ theme|default('abyss') }}">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -12,7 +12,14 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
+<style>
+    table th, table td {
+        padding: 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+</style>
 <body>
+
 <div class="flex min-h-screen bg-base-100">
     <div class="w-64 bg-base-200 flex flex-col items-center space-y-6">
         <div class="drawer lg:drawer-open">
@@ -26,13 +33,16 @@
                 <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                 <ul class="menu bg-base-200 text-base-content min-h-full w-64 p-4">
                     <li>
-                        <a href="{{ path('app_band_index') }}">Bands</a>
+                        <a href="{{ path('app_band_index') }}" class="text-xl">Bands</a>
                     </li>
                     <li>
-                        <a href="{{ path('app_festival_index') }}">Festivals</a>
+                        <a href="{{ path('app_festival_index') }}" class="text-xl">Festivals</a>
                     </li>
                     <li>
-                        <a href="{{ path('app_booking') }}">Bookings</a>
+                        <a href="{{ path('app_booking') }}" class="text-xl">Bookings</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_booking_reports') }}" class="text-xl">Booking Reports</a>
                     </li>
                 </ul>
             </div>

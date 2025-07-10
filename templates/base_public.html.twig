@@ -7,8 +7,40 @@
 
 </head>
 <body>
-<header class="text-4xl font-bold bg-base-300 p-4">ShowTime
-
+<header class="text-4xl font-bold bg-base-300 p-4 flex justify-between items-center">ShowTime
+    {% if app.user %}
+        <div class="dropdown dropdown-end">
+            <button class="btn btn-circle bg-base-200 text-base-content font-bold" type="button">
+                {{ app.user.userIdentifier|first|upper }}
+            </button>
+            <ul
+                class="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-48 mt-3">
+                <li class="text-sm px-2 py-1 text-base-content/70">
+                    {{ app.user.userIdentifier }}
+                </li>
+                <li>
+                    <a href="{{ path('app_user_bookings') }}" class="text-base-content">
+                        Your Bookings
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_logout') }}" class="text-error hover:bg-error hover:text-white">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {% else %}
+        <div class="login nav-link text-xs">
+            <span>
+                You are not logged in(
+                <a href="{{ path('app_login') }}" class="link link-primary">
+                        Login
+                    </a>
+                )
+            </span>
+        </div>
+    {% endif %}
 </header>
 
 <div class="p-8 space-y-6">

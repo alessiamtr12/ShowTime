@@ -1,31 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bookings{% endblock %}
+{% block title %}Booking Reports{% endblock %}
 
 {% block body %}
     <div class="p-6">
-        <h1 class="text-2xl font-bold mb-6">Bookings</h1>
+        <h1 class="text-2xl font-bold mb-6">Booking Reports per Festival</h1>
 
-        <table class="table w-full text-left border rounded-lg bg-base-100 sortable">
+        <table class="table w-full text-left border rounded-lg bg-base-100">
             <thead class="bg-base-200">
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Festival ID</th>
+                <th>Festival</th>
+                <th>Total Bookings</th>
+                <th>Price per Ticket (RON)</th>
+                <th>Total (RON)</th>
             </tr>
             </thead>
             <tbody>
-            {% for booking in bookings %}
-                <tr class="hover:bg-base-300">
-                    <td>{{ booking.id }}</td>
-                    <td>{{ booking.name }}</td>
-                    <td>{{ booking.email }}</td>
-                    <td>{{ booking.bookedFestival.id }}</td>
+            {% for row in reportData %}
+                <tr class="border-t">
+                    <td class="p-2">{{ row.festivalName }}</td>
+                    <td class="p-2">{{ row.totalBookings }}</td>
+                    <td class="p-2">{{ row.festivalPrice|number_format(2, '.', ',') }}</td>
+                    <td class="p-2 font-semibold">{{ row.totalRevenue|number_format(2, '.', ',') }}</td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4" class="text-center text-gray-500">No records found</td>
+                    <td colspan="4" class="p-4 text-center text-gray-500">No booking data found.</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -45,5 +45,4 @@
             {% endif %}
         </div>
     </div>
-    <script src="{{ asset('sort/sorttable.js') }}"></script>
 {% endblock %}

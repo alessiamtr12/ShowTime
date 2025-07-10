@@ -15,11 +15,30 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BookingController extends AbstractController
 {
     #[Route('admin/booking', name: 'app_booking')]
-    public function index(BookingRepository $bookingRepository): Response
+    public function index(Request $request, BookingRepository $bookingRepository): Response
     {
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+
+        $queryBuilder = $bookingRepository->createQueryBuilder('b')
+            ->orderBy('b.id', 'DESC');
+
+        $total = count($queryBuilder->getQuery()->getResult());
+
+        $bookings = $queryBuilder
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+
+        $totalPages = ceil($total / $limit);
+
         return $this->render('admin/booking/index.html.twig', [
             'controller_name' => 'BookingController',
-            'bookings' => $bookingRepository->findAll(),
+            'bookings' => $bookings,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 
@@ -29,6 +48,8 @@ final class BookingController extends AbstractController
         $bookedFestival = $festival;
         $booking = new Booking();
         $booking->setBookedFestival($bookedFestival);
+        $user = $this->getUser();
+        $booking->setEmail($user->getEmail());
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
@@ -36,7 +57,9 @@ final class BookingController extends AbstractController
             $entityManager->persist($booking);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Booking successful!');
+
+            return $this->redirectToRoute('app_user_bookings');
         }
 
         return $this->render('booking/new.html.twig', [
@@ -45,4 +68,25 @@ final class BookingController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/booking/reports', name: 'app_booking_reports')]
+    public function reports(Request $request, BookingRepository $bookingRepository): Response
+    {
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+        $reportDataFull = $bookingRepository->getBookingReportPerFestival();
+
+        $total = count($reportDataFull);
+        $totalPages = ceil($total / $limit);
+
+        $total = count($reportDataFull);
+        $totalPages = ceil($total / $limit);
+
+        $reportData = array_slice($reportDataFull, $offset, $limit);
+        return $this->render('admin/booking/reports.html.twig', [
+            'reportData' => $reportData,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+        ]);
+    }
 }

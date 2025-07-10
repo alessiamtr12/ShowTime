@@ -21,7 +21,7 @@ security:
                 login_path: app_login
                 check_path: app_login
 
-                default_target_path: app_band_index
+                default_target_path: app_home
                 csrf_token_id: auth_token
                 enable_csrf: true
             logout:

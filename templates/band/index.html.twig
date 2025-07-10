@@ -1,44 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Band index{% endblock %}
+{% block title %}Bands{% endblock %}
 
 {% block body %}
-    <h1>Bands</h1>
+    <div class="p-6">
+        <h1 class="text-2xl font-bold mb-6">Bands</h1>
 
-    <table class="sortable table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Genre</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for band in bands %}
-            <tr class="hover:bg-base-300">
-                <td>{{ band.id }}</td>
-                <td>{{ band.name }}</td>
-                <td>{{ band.genre.value }}</td>
-                <td>
-                    <button class="btn btn-soft btn-primary">
-                        <a href="{{ path('app_band_show', {'id': band.id}) }}">Show</a>
-                    </button>
-                    <button class="btn btn-soft btn-primary">
-                        <a href="{{ path('app_band_edit', {'id': band.id}) }}">Edit</a>
-                    </button>
-
-                </td>
-            </tr>
-        {% else %}
+        <table class="table w-full text-left border rounded-lg bg-base-100 sortable">
+            <thead class="bg-base-200">
             <tr>
-                <td colspan="4">no records found</td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <button class="btn btn-soft btn-primary">
-        <a href="{{ path('app_band_new') }}">Create new</a>
-    </button>
+            </thead>
+            <tbody>
+            {% for band in bands %}
+                <tr class="hover:bg-base-300">
+                    <td>{{ band.id }}</td>
+                    <td>{{ band.name }}</td>
+                    <td>{{ band.genre.value }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="{{ path('app_band_show', {'id': band.id}) }}">Show</a>
+                        <a class="btn btn-sm btn-secondary ml-2" href="{{ path('app_band_edit', {'id': band.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-gray-500">No records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="mt-6 flex justify-center gap-2">
+            {% if currentPage > 1 %}
+                <a class="btn btn-sm" href="?page={{ currentPage - 1 }}">← Prev</a>
+            {% endif %}
+
+            {% for i in 1..totalPages %}
+                <a class="btn btn-sm {{ currentPage == i ? 'btn-primary' : 'btn-outline' }}"
+                   href="?page={{ i }}">{{ i }}</a>
+            {% endfor %}
+
+            {% if currentPage < totalPages %}
+                <a class="btn btn-sm" href="?page={{ currentPage + 1 }}">Next →</a>
+            {% endif %}
+        </div>
+
+        <a class="btn btn-primary mt-4" href="{{ path('app_band_new') }}">Create new</a>
+    </div>
     <script src="{{ asset('sort/sorttable.js') }}"></script>
 {% endblock %}

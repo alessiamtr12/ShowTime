@@ -20,18 +20,38 @@ final class FestivalController extends AbstractController
     {
         $form = $this->createForm(FestivalFilterType::class);
         $form->handleRequest($request);
+
         $search = $form->get('search')->getData();
+        $page = max(1, $request->query->getInt('page', 1));
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+
         if ($search) {
-            $festivals = $festivalRepository->findBySearch($search);
+            $queryBuilder = $festivalRepository->createQueryBuilder('f')
+                ->where('f.name LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
         } else {
-            $festivals = $festivalRepository->findAll();
+            $queryBuilder = $festivalRepository->createQueryBuilder('f');
         }
+
+        $total = count($queryBuilder->getQuery()->getResult());
+
+        $festivals = $queryBuilder
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+
+        $totalPages = ceil($total / $limit);
 
         return $this->render('festival/index.html.twig', [
             'form' => $form->createView(),
             'festivals' => $festivals,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
+
 
     #[Route('/new', name: 'app_festival_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -44,7 +64,7 @@ final class FestivalController extends AbstractController
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
 
                 $imageFile->move(
                     $this->getParameter('assets_images_directory'),
@@ -90,7 +110,7 @@ final class FestivalController extends AbstractController
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
 
                 $imageFile->move(
                     $this->getParameter('assets_images_directory'),
@@ -112,7 +132,7 @@ final class FestivalController extends AbstractController
     #[Route('/{id}', name: 'app_festival_delete', methods: ['POST'])]
     public function delete(Request $request, Festival $festival, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$festival->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $festival->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($festival);
             $entityManager->flush();
         }
