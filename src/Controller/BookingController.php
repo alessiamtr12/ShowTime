@@ -12,10 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/booking')]
 final class BookingController extends AbstractController
 {
-    #[Route(name: 'app_booking')]
+    #[Route('admin/booking', name: 'app_booking')]
     public function index(BookingRepository $bookingRepository): Response
     {
         return $this->render('admin/booking/index.html.twig', [
@@ -45,4 +44,5 @@ final class BookingController extends AbstractController
             'form' => $form,
         ]);
     }
+
 }

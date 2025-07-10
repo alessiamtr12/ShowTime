@@ -20,9 +20,9 @@ final class FestivalController extends AbstractController
     {
         $form = $this->createForm(FestivalFilterType::class);
         $form->handleRequest($request);
-        $location = $form->get('location')->getData();
-        if ($location) {
-            $festivals = $festivalRepository->findByLocation($location);
+        $search = $form->get('search')->getData();
+        if ($search) {
+            $festivals = $festivalRepository->findBySearch($search);
         } else {
             $festivals = $festivalRepository->findAll();
         }

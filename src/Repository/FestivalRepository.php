@@ -40,15 +40,24 @@ class FestivalRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function findByLocation(?string $location): array
+    //    public function findByLocation(?string $location): array
+    //    {
+    //        if (!$location) {
+    //            return $this->findAll();
+    //        }
+    //
+    //        return $this->createQueryBuilder('f')
+    //            ->andWhere('f.location LIKE :location')
+    //            ->setParameter('location', '%'.$location.'%')
+    //            ->getQuery()
+    //            ->getResult();
+    //    }
+    public function findBySearch($search): array
     {
-        if (!$location) {
-            return $this->findAll();
-        }
-
         return $this->createQueryBuilder('f')
-            ->andWhere('f.location LIKE :location')
-            ->setParameter('location', '%'.$location.'%')
+            ->where('f.name LIKE :search')
+            ->orWhere('f.location LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
             ->getQuery()
             ->getResult();
     }
